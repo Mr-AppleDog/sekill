@@ -1,0 +1,18 @@
+spring:
+  devtools:
+    restart:
+      enabled: true  #???????
+      additional-paths: src/main/java #????
+      exclude: WEB-INF/**
+  datasource:
+    url: jdbc:mysql://localhost:3306/DB?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+# Logger Config
+logging:
+  level:
+    com.baomidou.mybatisplus.samples.quickstart: debug
+server:
+  port: 9090
