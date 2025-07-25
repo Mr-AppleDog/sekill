@@ -1,7 +1,7 @@
 package com.base.springbootbase.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.base.springbootbase.entity.User;
+import com.base.springbootbase.domain.entity.User;
 
 /**
  * @author MrLu

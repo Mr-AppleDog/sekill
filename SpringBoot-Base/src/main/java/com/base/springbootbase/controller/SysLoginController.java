@@ -1,9 +1,13 @@
 package com.base.springbootbase.controller;
 
-import com.base.springbootbase.entity.User;
+import com.base.springbootbase.domain.entity.User;
 import com.base.springbootbase.common.result.Result;
+import com.base.springbootbase.domain.model.LoginBody;
+import com.base.springbootbase.framework.web.service.SysLoginService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -14,16 +18,20 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class SysLoginController {
+    @Autowired
+    private SysLoginService loginService;
 
     /**
      * 登录
      * @return
      */
     @PostMapping("/login")
-    public Result login() {
+    public Result login(@RequestBody LoginBody loginBody) {
 //        System.out.println("登录成功");
-        Result result = Result.success("登录成功");
-        result.put("token", "123456");
+        String token=loginService.login(loginBody);
+        Result result = Result.success(token);
+//        Result result = Result.success("登录成功");
+//        result.put("token", "123456");
         return result;
     }
 
@@ -34,7 +42,7 @@ public class SysLoginController {
     @GetMapping("/getInfo")
     public Result getInfo() {
         User user = new User();
-        user.setName("admin-spring-test344");
+//        user.setUserName("admin-spring-test344");
         return Result.success(user);
     }
 
@@ -45,7 +53,7 @@ public class SysLoginController {
     @GetMapping("/getRouters")
     public Result getRouters() {
         User user = new User();
-        user.setName("admin");
+//        user.setUserName("admin");
         return Result.success(user);
     }
 }

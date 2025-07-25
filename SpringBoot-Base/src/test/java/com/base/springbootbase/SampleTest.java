@@ -1,10 +1,11 @@
 package com.base.springbootbase;
 
-import com.base.springbootbase.entity.User;
+import com.base.springbootbase.domain.entity.User;
 import com.base.springbootbase.mapper.UserMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.List;
 
@@ -25,6 +26,12 @@ public class SampleTest {
         List<User> userList = userMapper.selectList(null);
 //        Assert.isTrue(5 == userList.size(), "");
         userList.forEach(System.out::println);
+    }
+    @Test
+    public void testPassword() {
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        String encode = bCryptPasswordEncoder.encode("123456");
+        System.out.println(encode);
     }
 
 }
