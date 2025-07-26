@@ -30,8 +30,6 @@ public class SysLoginController {
 //        System.out.println("登录成功");
         String token=loginService.login(loginBody);
         Result result = Result.success(token);
-//        Result result = Result.success("登录成功");
-//        result.put("token", "123456");
         return result;
     }
 

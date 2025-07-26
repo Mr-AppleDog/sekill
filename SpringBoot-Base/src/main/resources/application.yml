@@ -10,9 +10,31 @@ spring:
     password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+      database: 1
+      #    password: 123456 #默认为空
+      timeout: 3000ms
+      lettuce:
+        pool:
+          max-active: 20  # 最大连接数，负值表示没有限制，默认8
+          max-wait: -1    # 最大阻塞等待时间，负值表示没限制，默认-1
+          max-idle: 8     # 最大空闲连接，默认8
+          min-idle: 0     # 最小空闲连接，默认0
 # Logger Config
 logging:
   level:
     com.baomidou.mybatisplus.samples.quickstart: debug
 server:
   port: 9090
+
+# token配置
+token:
+  # 令牌自定义标识
+  header: token
+  # 令牌密钥
+  secret: abcdefghijklmnopqrstuvwxyz
+  # 令牌有效期（默认30分钟）
+  expireTime: 30

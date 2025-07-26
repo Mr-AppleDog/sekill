@@ -1,6 +1,8 @@
 package com.base.springbootbase.framework.config;
 
+import com.base.springbootbase.framework.security.filter.JwtAuthenticationTokenFilter;
 import com.base.springbootbase.framework.web.service.UserDetailsServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -13,6 +15,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
  * @author MrLu
@@ -23,6 +26,8 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+    @Autowired
+    private JwtAuthenticationTokenFilter authenticationTokenFilter;
     // 自定义用户详情服务（从数据库查询用户）
     private final UserDetailsServiceImpl userDetailsService;
 
@@ -67,6 +72,8 @@ public class SecurityConfig {
                         .requestMatchers("/login").permitAll()
                         .anyRequest().authenticated()
                 );
+        //添加JWT 过滤器
+        http.addFilterBefore(authenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
 //                .formLogin(form ->form.loginPage("/login").permitAll());
 //                .formLogin(form ->form
 //                        // 无需额外配置，仅调用formLogin()即可启用默认登录页
