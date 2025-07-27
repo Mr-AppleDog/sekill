@@ -8,7 +8,7 @@ import java.util.Set;
  * @description:
  * @date 2025/7/25 23:50
  */
-public class SysRole {
+public class SysRole extends BaseEntity{
     private static final long serialVersionUID = 1L;
 
     /**

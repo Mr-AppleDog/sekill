@@ -4,6 +4,7 @@ import com.base.springbootbase.common.constant.HttpStatus;
 import com.base.springbootbase.common.constant.MessageConstant;
 import com.base.springbootbase.common.exception.PasswordErrorException;
 import com.base.springbootbase.common.exception.ServiceException;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/hello")
 public class HelloController {
+    @PreAuthorize("hasAuthority('sys:hello')")
     @RequestMapping("/test")
     public String hello(){
         return "Hello world";

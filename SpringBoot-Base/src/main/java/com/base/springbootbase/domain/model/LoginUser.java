@@ -4,9 +4,12 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.base.springbootbase.domain.entity.SysUser;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author MrLu
@@ -64,6 +67,8 @@ public class LoginUser implements UserDetails {
     /**
      * 权限列表
      */
+    //存储SpringSecurity所需要的权限信息的集合
+    @JSONField(serialize = false)
     private Set<String> permissions;
 
     /**
@@ -261,6 +266,13 @@ public class LoginUser implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities()
     {
-        return null;
+        if (permissions == null) {
+            return Collections.emptyList();
+        }
+
+        // 将权限字符串转换为SimpleGrantedAuthority对象
+        return permissions.stream()
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
     }
 }

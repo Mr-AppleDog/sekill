@@ -32,7 +32,12 @@ router.beforeEach(async(to, from, next) => {
       } else {
         try {
           // get user info
-          await store.dispatch('user/getInfo')
+          await store.dispatch('user/getInfo').then(() => {
+            store.dispatch('GenerateRoutes').then(accessRoutes => {
+              router.addRoutes(accessRoutes) // 动态添加可访问路由表
+              next({ ...to, replace: true }) // hack方法 确保addRoutes已完成
+            })
+          })
 
           next()
         } catch (error) {

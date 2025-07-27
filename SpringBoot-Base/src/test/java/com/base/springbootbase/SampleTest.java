@@ -1,5 +1,6 @@
 package com.base.springbootbase;
 
+import com.base.springbootbase.common.util.RedisCache;
 import com.base.springbootbase.domain.entity.User;
 import com.base.springbootbase.mapper.UserMapper;
 import org.junit.jupiter.api.Test;
@@ -32,6 +33,14 @@ public class SampleTest {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         String encode = bCryptPasswordEncoder.encode("123456");
         System.out.println(encode);
+    }
+    @Autowired
+    private RedisCache redisCache;
+    @Test
+    public void testRedis() {
+        String userKey = "login_tokens:2be51598-65f4-4ba3-b529-85c2590e5f76";
+        Object cacheObject = redisCache.getCacheObject(userKey);
+        System.out.println(cacheObject);
     }
 
 }

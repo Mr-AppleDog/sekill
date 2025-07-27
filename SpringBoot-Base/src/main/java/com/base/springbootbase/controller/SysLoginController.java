@@ -1,14 +1,22 @@
 package com.base.springbootbase.controller;
 
+import com.base.springbootbase.common.util.SecurityUtils;
+import com.base.springbootbase.domain.entity.SysMenu;
+import com.base.springbootbase.domain.entity.SysUser;
 import com.base.springbootbase.domain.entity.User;
 import com.base.springbootbase.common.result.Result;
 import com.base.springbootbase.domain.model.LoginBody;
 import com.base.springbootbase.framework.web.service.SysLoginService;
+import com.base.springbootbase.framework.web.service.SysPermissionService;
+import com.base.springbootbase.service.SysMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+import java.util.Set;
 
 /**
  * @author MrLu
@@ -21,6 +29,11 @@ public class SysLoginController {
     @Autowired
     private SysLoginService loginService;
 
+    @Autowired
+    private SysPermissionService permissionService;
+
+    @Autowired
+    private SysMenuService menuService;
     /**
      * 登录
      * @return
@@ -39,9 +52,15 @@ public class SysLoginController {
      */
     @GetMapping("/getInfo")
     public Result getInfo() {
-        User user = new User();
-//        user.setUserName("admin-spring-test344");
-        return Result.success(user);
+        SysUser user = SecurityUtils.getLoginUser().getUser();
+        Set<String> roles = permissionService.getRolePermission(user);
+        // 权限集合
+        Set<String> permissions = permissionService.getMenuPermission(user);
+        Result result = Result.success();
+        result.put("user", user);
+        result.put("roles", roles);
+        result.put("permissions", permissions);
+        return result;
     }
 
     /**
@@ -50,8 +69,8 @@ public class SysLoginController {
      */
     @GetMapping("/getRouters")
     public Result getRouters() {
-        User user = new User();
-//        user.setUserName("admin");
-        return Result.success(user);
+        Long userId = SecurityUtils.getUserId();
+        List<SysMenu> menus = menuService.selectMenuTreeByUserId(userId);
+        return Result.success(menuService.buildMenus(menus));
     }
 }

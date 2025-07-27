@@ -33,7 +33,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         if(ObjectUtils.isNotNull(loginUser)){
             // TODO: 2025/7/26 待完善逻辑
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginUser, null, loginUser.getAuthorities());
-            authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+//            authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         }
 //        if (ObjectUtils.isNotNull(loginUser) && StringUtils.isNull(SecurityUtils.getAuthentication()))

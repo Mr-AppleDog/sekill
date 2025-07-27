@@ -14,6 +14,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Service;
 
+import java.util.*;
+
 /**
  * @author MrLu
  * @version 1.0
@@ -25,6 +27,8 @@ public class UserDetailsServiceImpl implements UserDetailsManager, UserDetailsPa
 
     @Autowired
     private SysUserService userService;
+    @Autowired
+    private SysPermissionService permissionService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -43,9 +47,8 @@ public class UserDetailsServiceImpl implements UserDetailsManager, UserDetailsPa
         return createLoginUser(user);
     }
     public UserDetails createLoginUser(SysUser user){
-        // TODO: 2025/7/26  没有赋予权限
 //        return new LoginUser(user.getUserId(), user.getDeptId(), user, permissionService.getMenuPermission(user));
-        return new LoginUser(user.getUserId(), user.getDeptId(), user, null);
+        return new LoginUser(user.getUserId(), user.getDeptId(), user, permissionService.getMenuPermission( user));
 //        new org.springframework.security.core.userdetails.User()
     }
 

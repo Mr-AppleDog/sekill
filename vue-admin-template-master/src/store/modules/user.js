@@ -7,7 +7,9 @@ const getDefaultState = () => {
   return {
     token: getToken(),
     name: '',
-    avatar: ''
+    avatar: '',
+    roles: [],
+    permissions: []
   }
 }
 
@@ -25,6 +27,12 @@ const mutations = {
   },
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar
+  },
+  SET_ROLES: (state, roles) => {
+    state.roles = roles
+  },
+  SET_PERMISSIONS: (state, permissions) => {
+    state.permissions = permissions
   }
 }
 
@@ -35,8 +43,9 @@ const actions = {
     return new Promise((resolve, reject) => {
       login({ username: username.trim(), password: password }).then(response => {
         const { data } = response
-        commit('SET_TOKEN', data.token)
-        setToken(data.token)
+        commit('SET_TOKEN', data)
+        console.log(data)
+        setToken(data)
         resolve()
       }).catch(error => {
         reject(error)
@@ -47,18 +56,28 @@ const actions = {
   // get user info
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
-      getInfo().then(response => {
-        const { data } = response
-
-        if (!data) {
-          return reject('Verification failed, please Login again.')
+      getInfo().then(res => {
+        const user = res.user
+        const avatar = (user.avatar == "" || user.avatar == null) ? require('@/assets/images/profile.gif') : process.env.VUE_APP_BASE_API + user.avatar;
+        if (res.roles && res.roles.length > 0) { // 验证返回的roles是否是一个非空数组
+          commit('SET_ROLES', res.roles)
+          commit('SET_PERMISSIONS', res.permissions)
+        } else {
+          commit('SET_ROLES', ['ROLE_DEFAULT'])
         }
-
-        const { name, avatar } = data
-
-        commit('SET_NAME', name)
+        commit('SET_NAME', user.userName)
         commit('SET_AVATAR', avatar)
-        resolve(data)
+        // const { data } = response
+        //
+        // if (!data) {
+        //   return reject('Verification failed, please Login again.')
+        // }
+        //
+        // const { name, avatar } = data
+        //
+        // commit('SET_NAME', name)
+        // commit('SET_AVATAR', avatar)
+        resolve(res)
       }).catch(error => {
         reject(error)
       })
