@@ -1,7 +1,7 @@
 package com.base.springbootbase.framework.web.service;
 
-import com.base.springbootbase.domain.entity.SysRole;
-import com.base.springbootbase.domain.entity.SysUser;
+import com.base.springbootbase.common.core.domain.entity.SysRole;
+import com.base.springbootbase.common.core.domain.entity.SysUser;
 import com.base.springbootbase.service.SysMenuService;
 import com.base.springbootbase.service.SysRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +37,8 @@ public class SysPermissionService {
         // 管理员拥有所有权限
         if (user.isAdmin())
         {
-            // TODO: 2025/7/26 获取所有权限
+            // TODO: 2025/7/26 获取所有权限  perms.addAll(menuService.AllMenuPerms());
+//            perms.addAll(menuService.selectMenuPermsByUserId(user.getUserId()));
             perms.add("*:*:*");
         }
         else

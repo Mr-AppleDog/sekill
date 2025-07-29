@@ -2,9 +2,9 @@ package com.base.springbootbase.framework.web.service;
 
 import com.base.springbootbase.common.constant.MessageConstant;
 import com.base.springbootbase.common.exception.PasswordErrorException;
-import com.base.springbootbase.domain.entity.SysUser;
-import com.base.springbootbase.domain.model.LoginBody;
-import com.base.springbootbase.domain.model.LoginUser;
+import com.base.springbootbase.common.core.domain.entity.SysUser;
+import com.base.springbootbase.common.core.domain.model.LoginBody;
+import com.base.springbootbase.common.core.domain.model.LoginUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;

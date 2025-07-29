@@ -2,9 +2,10 @@ package com.base.springbootbase.common.util;
 
 import com.base.springbootbase.common.constant.HttpStatus;
 import com.base.springbootbase.common.exception.ServiceException;
-import com.base.springbootbase.domain.model.LoginUser;
+import com.base.springbootbase.common.core.domain.model.LoginUser;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
  * @author MrLu
@@ -57,5 +58,17 @@ public class SecurityUtils {
     public static boolean isAdmin(Long userId)
     {
         return userId != null && 1L == userId;
+    }
+
+    /**
+     * 生成BCryptPasswordEncoder密码
+     *
+     * @param password 密码
+     * @return 加密字符串
+     */
+    public static String encryptPassword(String password)
+    {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        return passwordEncoder.encode(password);
     }
 }

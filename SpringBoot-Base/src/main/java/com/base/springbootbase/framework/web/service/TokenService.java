@@ -5,11 +5,11 @@ import com.base.springbootbase.common.constant.CacheConstants;
 import com.base.springbootbase.common.constant.Constants;
 import com.base.springbootbase.common.util.IdUtils;
 import com.base.springbootbase.common.util.RedisCache;
-import com.base.springbootbase.domain.model.LoginUser;
+import com.base.springbootbase.common.core.domain.model.LoginUser;
+import com.base.springbootbase.common.util.StringUtils;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import io.micrometer.common.util.StringUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -148,5 +148,12 @@ public class TokenService {
                 .setSigningKey(secret)
                 .parseClaimsJws(token)
                 .getBody();
+    }
+
+    public void setLoginUser(LoginUser loginUser) {
+        if (StringUtils.isNotNull(loginUser) && StringUtils.isNotEmpty(loginUser.getToken()))
+        {
+            refreshToken(loginUser);
+        }
     }
 }

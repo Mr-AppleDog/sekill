@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.base.springbootbase.mapper.SysPostMapper">
+
+    <select id="selectPostListByUserId"  parameterType="Long" resultType="Long">
+        select p.post_id
+        from sys_post p
+                 left join sys_user_post up on up.post_id = p.post_id
+                 left join sys_user u on u.user_id = up.user_id
+        where u.user_id = #{userId}
+    </select>
+</mapper>

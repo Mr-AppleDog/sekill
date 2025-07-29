@@ -1,6 +1,7 @@
 package com.base.springbootbase.framework.config;
 
 import com.base.springbootbase.framework.security.filter.JwtAuthenticationTokenFilter;
+import com.base.springbootbase.framework.security.handle.AuthenticationEntryPointImpl;
 import com.base.springbootbase.framework.web.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -33,6 +34,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
     @Autowired
     private JwtAuthenticationTokenFilter authenticationTokenFilter;
+    @Autowired
+    private AuthenticationEntryPointImpl unauthorizedHandler;
     // 自定义用户详情服务（从数据库查询用户）
     private final UserDetailsServiceImpl userDetailsService;
 
@@ -71,12 +74,16 @@ public class SecurityConfig {
 
                 // CSRF禁用，因为不使用session
                 .csrf(csrf -> csrf.disable())
+                .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
                 // 基于token，所以不需要session
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/login").permitAll()
                         .anyRequest().authenticated()
                 );
+//        http.formLogin(
+//                form -> form.failureHandler(unauthorizedHandler)
+//        );
         //添加JWT 过滤器
         http.addFilterBefore(authenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
 //                .formLogin(form ->form.loginPage("/login").permitAll());

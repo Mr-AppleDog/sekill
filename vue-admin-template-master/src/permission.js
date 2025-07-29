@@ -1,10 +1,11 @@
-import router from './router'
+import router, { dynamicRoutes } from './router'
 import store from './store'
 import { Message } from 'element-ui'
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
 import { getToken } from '@/utils/auth' // get token from cookie
 import getPageTitle from '@/utils/get-page-title'
+import auth from '@/plugins/auth'
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
@@ -32,14 +33,17 @@ router.beforeEach(async(to, from, next) => {
       } else {
         try {
           // get user info
-          await store.dispatch('user/getInfo').then(() => {
-            store.dispatch('GenerateRoutes').then(accessRoutes => {
-              router.addRoutes(accessRoutes) // 动态添加可访问路由表
-              next({ ...to, replace: true }) // hack方法 确保addRoutes已完成
-            })
-          })
-
-          next()
+          await store.dispatch('user/getInfo')
+          const accessRoutes = await store.dispatch('user/generateRoutes')
+          accessRoutes.push(
+            { path: '*', redirect: '/404', hidden: true }
+          )
+          router.addRoutes(accessRoutes)
+          const dongRoutes = filterDynamicRoutes(dynamicRoutes);
+          router.addRoutes(dongRoutes)
+          console.log(accessRoutes)
+          store.dispatch('user/setRoutes', accessRoutes)
+          next({ ...to, replace: true }) // hack方法 确保addRoutes已完成
         } catch (error) {
           // remove token and go to login page to re-login
           await store.dispatch('user/resetToken')
@@ -67,3 +71,19 @@ router.afterEach(() => {
   // finish progress bar
   NProgress.done()
 })
+// 动态路由遍历，验证是否具备权限
+export function filterDynamicRoutes(routes) {
+  const res = []
+  routes.forEach(route => {
+    if (route.permissions) {
+      if (auth.hasPermiOr(route.permissions)) {
+        res.push(route)
+      }
+    } else if (route.roles) {
+      if (auth.hasRoleOr(route.roles)) {
+        res.push(route)
+      }
+    }
+  })
+  return res
+}

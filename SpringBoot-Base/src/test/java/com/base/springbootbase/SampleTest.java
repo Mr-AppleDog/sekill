@@ -2,6 +2,7 @@ package com.base.springbootbase;
 
 import com.base.springbootbase.common.util.RedisCache;
 import com.base.springbootbase.domain.entity.User;
+import com.base.springbootbase.common.core.domain.model.LoginUser;
 import com.base.springbootbase.mapper.UserMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,9 +39,9 @@ public class SampleTest {
     private RedisCache redisCache;
     @Test
     public void testRedis() {
-        String userKey = "login_tokens:2be51598-65f4-4ba3-b529-85c2590e5f76";
-        Object cacheObject = redisCache.getCacheObject(userKey);
-        System.out.println(cacheObject);
+        String userKey = "login_tokens:26db1e84-f336-4b77-8714-b7ae92bcf9aa";
+        LoginUser user  = redisCache.getCacheObject(userKey);
+        System.out.println(user);
     }
 
 }

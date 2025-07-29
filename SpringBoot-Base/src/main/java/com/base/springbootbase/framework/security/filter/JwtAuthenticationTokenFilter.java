@@ -1,7 +1,7 @@
 package com.base.springbootbase.framework.security.filter;
 
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
-import com.base.springbootbase.domain.model.LoginUser;
+import com.base.springbootbase.common.core.domain.model.LoginUser;
 import com.base.springbootbase.framework.web.service.TokenService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -10,7 +10,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 

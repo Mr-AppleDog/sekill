@@ -1,11 +1,10 @@
 package com.base.springbootbase.controller;
 
 import com.base.springbootbase.common.util.SecurityUtils;
-import com.base.springbootbase.domain.entity.SysMenu;
-import com.base.springbootbase.domain.entity.SysUser;
-import com.base.springbootbase.domain.entity.User;
+import com.base.springbootbase.common.core.domain.entity.SysMenu;
+import com.base.springbootbase.common.core.domain.entity.SysUser;
 import com.base.springbootbase.common.result.Result;
-import com.base.springbootbase.domain.model.LoginBody;
+import com.base.springbootbase.common.core.domain.model.LoginBody;
 import com.base.springbootbase.framework.web.service.SysLoginService;
 import com.base.springbootbase.framework.web.service.SysPermissionService;
 import com.base.springbootbase.service.SysMenuService;

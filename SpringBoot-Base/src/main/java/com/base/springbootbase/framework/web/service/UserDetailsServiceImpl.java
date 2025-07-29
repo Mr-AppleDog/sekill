@@ -3,18 +3,15 @@ package com.base.springbootbase.framework.web.service;
 import cn.hutool.core.util.ObjectUtil;
 import com.base.springbootbase.common.enums.UserStatus;
 import com.base.springbootbase.common.exception.ServiceException;
-import com.base.springbootbase.domain.entity.SysUser;
-import com.base.springbootbase.domain.model.LoginUser;
+import com.base.springbootbase.common.core.domain.entity.SysUser;
+import com.base.springbootbase.common.core.domain.model.LoginUser;
 import com.base.springbootbase.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsPasswordService;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Service;
-
-import java.util.*;
 
 /**
  * @author MrLu
