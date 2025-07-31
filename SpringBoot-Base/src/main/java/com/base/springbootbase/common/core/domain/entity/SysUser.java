@@ -2,6 +2,7 @@ package com.base.springbootbase.common.core.domain.entity;
 
 import com.base.springbootbase.domain.entity.BaseEntity;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -288,4 +289,27 @@ public class SysUser extends BaseEntity {
         this.roleId = roleId;
     }
 
+    @Override
+    public String toString() {
+        return "SysUser{" +
+                "userId=" + userId +
+                ", deptId=" + deptId +
+                ", userName='" + userName + '\'' +
+                ", nickName='" + nickName + '\'' +
+                ", email='" + email + '\'' +
+                ", phonenumber='" + phonenumber + '\'' +
+                ", sex='" + sex + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", password='" + password + '\'' +
+                ", status='" + status + '\'' +
+                ", delFlag='" + delFlag + '\'' +
+                ", loginIp='" + loginIp + '\'' +
+                ", loginDate=" + loginDate +
+                ", dept=" + dept +
+                ", roles=" + roles +
+                ", roleIds=" + Arrays.toString(roleIds) +
+                ", postIds=" + Arrays.toString(postIds) +
+                ", roleId=" + roleId +
+                '}';
+    }
 }

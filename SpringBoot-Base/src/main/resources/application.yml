@@ -39,4 +39,4 @@ token:
   # 令牌有效期（默认30分钟）
   expireTime: 30
 mybatis-plus:
-  type-aliases-package: com.base.springbootbase.common.core.domain
+  type-aliases-package: com.base.springbootbase.common.core.domain,com.base.springbootbase.domain

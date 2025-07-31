@@ -36,10 +36,19 @@ export const constantRoutes = [
     component: () => import('@/views/login/index'),
     hidden: true
   },
-
   {
     path: '/404',
     component: () => import('@/views/404'),
+    hidden: true
+  },
+  {
+    path: '/goods',
+    component: () => import('@/views/goods/index'),
+    hidden: true
+  },
+  {
+    path: '/product/:id',
+    component: () => import('@/views/goods/details.vue'),
     hidden: true
   },
 

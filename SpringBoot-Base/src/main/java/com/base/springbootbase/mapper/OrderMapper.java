@@ -1,0 +1,20 @@
+package com.base.springbootbase.mapper;
+
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.base.springbootbase.domain.entity.Goods;
+import com.base.springbootbase.domain.entity.Order;
+import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
+
+/**
+ * @author MrLu
+ * @version 1.0
+ * @description:
+ * @date 2025/7/30 17:51
+ */
+@Mapper
+public interface OrderMapper extends BaseMapper<Order> {
+
+
+}
